@@ -16,6 +16,7 @@ import { Loader2 } from "lucide-react"
 import { useJoin } from "@/features/workspaces/api/use-join"
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
+import { Id } from "../../../../convex/_generated/dataModel"
 
 export default function JoinPage() {
   const router = useRouter()
@@ -23,7 +24,7 @@ export default function JoinPage() {
   const workspaceId = useWorkspaceId()
 
   const { mutate, isPending } = useJoin()
-  const { data, isLoading } = UseGetWorkspaceInfo({ id: workspaceId })
+  const { data, isLoading } = UseGetWorkspaceInfo({ id: workspaceId as Id<"workspaces"> })
   const isMember = useMemo(() => data?.isMember, [data?.isMember])
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function JoinPage() {
 
   const handleComplete = (value: string) => {
     mutate(
-      { workspaceId, joinCode: value },
+      { workspaceId: workspaceId as Id<"workspaces">, joinCode: value },
       {
         onSuccess: (id) => {
           router.replace(`/workspace/${id}`)
