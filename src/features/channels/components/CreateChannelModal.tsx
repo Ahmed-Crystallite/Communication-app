@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/Input"
 import { Button } from "@/components/ui/Button"
 import { toast } from "sonner"
+import { Id } from "../../../../convex/_generated/dataModel"
 
 export default function CreateChannelModal() {
   const router = useRouter()
@@ -40,7 +41,7 @@ export default function CreateChannelModal() {
     mutate(
       {
         name,
-        workspaceId,
+        workspaceId: workspaceId as Id<"workspaces">,
       },
       {
         onSuccess: (id) => {
