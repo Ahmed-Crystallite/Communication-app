@@ -95,7 +95,9 @@ export const Message = ({
     )
   }
   const handleDeleteMessage = async () => {
-    const ok = await confirm()
+    const ok = await confirm(
+      "Are You Sure",
+    )
     if (!ok) return
     removeMessage(
       { id },
