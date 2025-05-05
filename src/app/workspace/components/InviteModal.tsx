@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/Dialog"
 import { useConfirm } from "@/hooks/use-confirm"
+import { Id } from "../../../../convex/_generated/dataModel"
 interface InviteModalProps {
   open: boolean
   setOpen: (open: boolean) => void
@@ -35,13 +36,15 @@ export default function InviteModal({
   const { mutate, isPending } = useNewJoinCode()
 
   const handleNewCode = async () => {
-    const ok = await confirm()
+    const ok = await confirm(
+      "Are You Sure",
+    )
 
     if (!ok) {
       return
     }
     mutate(
-      { workspaceId },
+      { workspaceId: workspaceId as Id<"workspaces"> },
       {
         onSuccess: () => {
           toast.success("Invite Code Regenerated")

@@ -28,19 +28,19 @@ const manrope = Manrope({
 // Meta Data
 export const metadata: Metadata = {
   metadataBase: new URL("https://acme.com"),
-  title: "Dark Chat App Like Slack for Team Collaboration",
+  title: "Chat App Like Slack for Team Collaboration",
   description:
-    "Discover a sleek dark-themed chat app inspired by Slack, designed for seamless team collaboration and real-time communication. Built with Create Next App, it’s perfect for modern, efficient, and secure team interactions. Try it today!",
+    "Discover a sleek chat app inspired by Slack, designed for seamless team collaboration and real-time communication. Built with Create Next App, it’s perfect for modern, efficient, and secure team interactions. Try it today!",
   generator: "Next.js",
-  applicationName: "Dark Chat",
+  applicationName: "Chat App",
   referrer: "origin-when-cross-origin",
   keywords: [
-    "Dark chat app",
+    "chat app",
     "Slack alternative",
     "Team collaboration tool",
     "Real-time messaging app",
     "Secure chat platform",
-    "Dark-themed communication app",
+    "communication app",
     "Dev AR chat app",
     "Modern team chat",
     "Productivity tools",
