@@ -60,7 +60,9 @@ export default function Header({ title }: HeaderProps) {
   }
 
   const handleDelete = async () => {
-    const ok = await confirm()
+    const ok = await confirm(
+      "Delete This Channel ?"
+    )
     if (!ok) return
 
     removeChannel(
