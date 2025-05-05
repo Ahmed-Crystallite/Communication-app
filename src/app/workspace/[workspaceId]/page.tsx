@@ -11,6 +11,7 @@ import { UseGetWorkspace } from "@/features/workspaces/api/use-get-workspace"
 import { useGetChannels } from "@/features/channels/api/use-get-channels"
 import { Loader2, TriangleAlert } from "lucide-react"
 import { useCurrentMember } from "@/features/members/api/use-current-member"
+import { Id } from "../../../../convex/_generated/dataModel"
 
 const WorkspaceIdPage = () => {
   const router = useRouter()
@@ -21,11 +22,11 @@ const WorkspaceIdPage = () => {
     workspaceId,
   })
   const { data: workspace, isLoading: workspaceLoading } = UseGetWorkspace({
-    id: workspaceId,
+    id: workspaceId as Id<"workspaces">,
   })
 
   const { data: channels, isLoading: channelsLoading } = useGetChannels({
-    workspaceId,
+    workspaceId: workspaceId as Id<"workspaces">,
   })
 
   const channelId = useMemo(() => channels?.[0]?._id, [channels])

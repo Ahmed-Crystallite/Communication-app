@@ -20,7 +20,7 @@ const MemberIdPage = () => {
 
   useEffect(() => {
     mutate(
-      { memberId, workspaceId },
+      { memberId, workspaceId: workspaceId as Id<"workspaces"> },
       {
         onSuccess: (data) => {
           setConversationId(data)
@@ -48,7 +48,7 @@ const MemberIdPage = () => {
     )
   }
 
-  return <Conversation id={conversationId} />
+  return <Conversation id={conversationId as Id<"conversations">} />
 }
 
 export default MemberIdPage
