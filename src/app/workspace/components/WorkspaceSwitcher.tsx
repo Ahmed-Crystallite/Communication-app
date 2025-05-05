@@ -1,9 +1,9 @@
 import { useWorkspaceId } from "@/hooks/use-workspace-id"
 import { UseGetWorkspace } from "@/features/workspaces/api/use-get-workspace"
-import { UseGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces"
 import { useCreateWorkspaceModal } from "@/features/workspaces/store/use-create-workspace-modal"
 import { useRouter } from "next/navigation"
 import { Loader2, Plus } from "lucide-react"
+import { Id } from "../../../../convex/_generated/dataModel"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,17 +11,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu"
+import { UseGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces"
 
-export default function WorkspaceSwitcher() {
+const WorkspaceSwitcher = () => {
   const router = useRouter()
 
   const workspaceId = useWorkspaceId()
   const [_open, setOpen] = useCreateWorkspaceModal()
 
-  const { data: workspaces, isLoading: workspacesLoading } = UseGetWorkspaces()
+  const { data: workspaces } = UseGetWorkspaces()
 
   const { data: workspace, isLoading: workspaceLoading } = UseGetWorkspace({
-    id: workspaceId,
+    id: workspaceId || "" as Id<"workspaces">,
   })
 
   const filterWorkspaces = workspaces?.filter(
@@ -73,3 +74,5 @@ export default function WorkspaceSwitcher() {
     </DropdownMenu>
   )
 }
+
+export default WorkspaceSwitcher

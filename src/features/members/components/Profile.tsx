@@ -56,13 +56,11 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
   const { data: member, isLoading: isMemberLoading } = useGetMember({
     id: memberId,
   })
-  const { mutate: updateMember, isPending: isUpdatingMember } =
-    useUpdateMember()
-  const { mutate: removeMember, isPending: isRemovingMember } =
-    useRemoveMember()
+  const { mutate: updateMember } = useUpdateMember()
+  const { mutate: removeMember } = useRemoveMember()
 
   const onRemove = async () => {
-    const ok = await confirmRemove()
+    const ok = await confirmRemove("Are you sure you want to remove this member?")
     if (!ok) return
 
     removeMember(
@@ -80,7 +78,7 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
   }
 
   const onUpdateRole = async (role: "admin" | "member") => {
-    const ok = await confirmUpdateRole()
+    const ok = await confirmUpdateRole("Are you sure you want to update this member's role?")
     if (!ok) return
     updateMember(
       { id: memberId, role },
@@ -96,7 +94,7 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
   }
 
   const onLeave = async () => {
-    const ok = await confirmLeave()
+    const ok = await confirmLeave("Are you sure you want to leave this workspace?")
     if (!ok) return
     removeMember(
       { id: memberId },

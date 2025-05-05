@@ -3,7 +3,6 @@ import { UseGetWorkspace } from "@/features/workspaces/api/use-get-workspace"
 import { useWorkspaceId } from "@/hooks/use-workspace-id"
 import { Info, Search } from "lucide-react"
 import {
-  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -11,12 +10,12 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/Command"
 import { useState } from "react"
 import { useGetChannels } from "@/features/channels/api/use-get-channels"
 import { useGetMembers } from "@/features/members/api/use-get-members"
 import { useRouter } from "next/navigation"
+import { Id } from "../../../../convex/_generated/dataModel"
 
 const Toolbar = () => {
   const router = useRouter()
@@ -26,12 +25,12 @@ const Toolbar = () => {
   const workspaceId = useWorkspaceId()
 
   const { data: channels } = useGetChannels({
-    workspaceId: workspaceId,
+    workspaceId: workspaceId ?? "" as Id<"workspaces">,
   })
   const { data: members } = useGetMembers({
-    workspaceId: workspaceId,
+    workspaceId: workspaceId ?? "" as Id<"workspaces">,
   })
-  const { data } = UseGetWorkspace({ id: workspaceId })
+  const { data } = UseGetWorkspace({ id: workspaceId ?? "" as Id<"workspaces"> })
 
   const onChannelClick = (channelId: string) => {
     setOpen(false)

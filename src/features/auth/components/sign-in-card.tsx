@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/Input"
 import { Separator } from "@/components/ui/Separator"
 import { SignInFlow } from "../types"
 import { TriangleAlert } from "lucide-react"
+import Link from "next/link"
 
 interface SignInCardProps {
   setState: (state: SignInFlow) => void
@@ -113,14 +114,11 @@ export default function SignInCard({ setState }: SignInCardProps) {
               Continue With Github
             </Button>
           </div>
-          <p className="text-sm text-gray-400">
-            Don't have an account?{" "}
-            <span
-              onClick={() => setState("signUp")}
-              className="text-sky-700 hover:underline cursor-pointer"
-            >
+          <p className="text-sm text-muted-foreground">
+            Don&apos;t have an account?{" "}
+            <Link href="/sign-up" className="text-primary hover:underline">
               Sign up
-            </span>
+            </Link>
           </p>
         </form>
       </CardContent>

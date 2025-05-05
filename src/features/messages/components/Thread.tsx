@@ -111,14 +111,14 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
           const { storageId } = await uploadResponse.json()
           imageStorageId = storageId
         } catch (error) {
-          toast.error("Failed to upload image. Please try again.")
+          toast.error(error instanceof Error ? error.message : "Failed to upload image. Please try again.")
           return
         }
       }
 
       const values: CreateMessageValues = {
         channelId,
-        workspaceId,
+        workspaceId: workspaceId ?? "" as Id<"workspaces">,
         parentMessageId: messageId,
         body,
         image: imageStorageId,
@@ -127,7 +127,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
       await createMessage(values, { throwError: true })
       setEditorKey((prev) => prev + 1)
     } catch (error) {
-      toast.error("Failed to send message. Please try again.")
+      toast.error(error instanceof Error ? error.message : "Failed to send message. Please try again.")
     } finally {
       setIsPending(false)
       editorRef?.current?.enable(true)

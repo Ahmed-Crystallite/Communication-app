@@ -1,15 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription,
 } from "@/components/ui/Dialog"
-// Lucide
-import { XIcon } from "lucide-react"
 interface ThumbnailProps {
   url: string | null | undefined
 }

@@ -22,7 +22,7 @@ import {
   WorkspaceHeader,
   WorkspaceSection,
 } from "./index"
-
+import { Id } from "../../../../convex/_generated/dataModel"
 const WorkspaceSidebar = () => {
   const memberId = useMemberId()
   const channelId = useChannelId()
@@ -30,27 +30,22 @@ const WorkspaceSidebar = () => {
 
   const [_open, setOpen] = useCreateChannelModal()
 
-  const { data: member, isLoading: memberLoading } = useCurrentMember({
-    workspaceId,
-  })
+  const { data: channels } = useGetChannels({ workspaceId: workspaceId ?? "" as Id<"workspaces"> })
+  const { data: members } = useGetMembers({ workspaceId: workspaceId ?? "" as Id<"workspaces"> })
+
+  const { data: currentMember } = useCurrentMember({ workspaceId })
   const { data: workspace, isLoading: workspaceLoading } = UseGetWorkspace({
-    id: workspaceId,
-  })
-  const { data: channels, isLoading: channelsLoading } = useGetChannels({
-    workspaceId,
+    id: workspaceId ?? "" as Id<"workspaces">,
   })
 
-  const { data: members, isLoading: membersLoading } = useGetMembers({
-    workspaceId,
-  })
-  if (workspaceLoading || memberLoading) {
+  if (workspaceLoading || !currentMember) {
     return (
       <div className="flex flex-col bg-[#5e2c5f] h-full items-center justify-center">
         <Loader2 className="size-5 animate-spin text-white" />
       </div>
     )
   }
-  if (!workspace || !member) {
+  if (!workspace) {
     return (
       <div className="flex flex-col gap-y-2 bg-[#5e2c5f] h-full items-center justify-center">
         <AlertTriangle className="size-5 text-white" />
@@ -63,7 +58,7 @@ const WorkspaceSidebar = () => {
     <div className="flex flex-col bg-[#5e2c5f] h-full">
       <WorkspaceHeader
         workspace={workspace}
-        isAdmin={member.role === "admin"}
+        isAdmin={currentMember.role === "admin"}
       />
       <div className="flex flex-col px-2 gap-y-2 mt-3">
         <SidebarItem
@@ -77,7 +72,7 @@ const WorkspaceSidebar = () => {
       <WorkspaceSection
         label="Channels"
         hint="New Channel"
-        onNew={member.role === "admin" ? () => setOpen(true) : undefined}
+        onNew={currentMember.role === "admin" ? () => setOpen(true) : undefined}
       >
         {channels?.map((item) => (
           <SidebarItem

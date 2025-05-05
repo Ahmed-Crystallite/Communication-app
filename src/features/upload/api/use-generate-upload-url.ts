@@ -30,30 +30,34 @@ export const useGenerateUploadUrl = () => {
   //   const [isError, setIsError] = useState(false)
   //   const [isSettled, setIsSettled] = useState(false)
 
-  const mutation = useMutation(api.upload.generateUploadUrl)
+  const generateUploadUrl = useMutation(api.upload.generateUploadUrl)
 
   const mutate = useCallback(
-    async (_values: {}, options?: Options) => {
+    async (_args: Record<string, never>, options?: Options) => {
       try {
         setData(null)
         setError(null)
         setStatus("pending")
 
-        const response = await mutation()
-        options?.onSuccess?.(response)
-        return response
+        const uploadUrl = await generateUploadUrl()
+        setData(uploadUrl)
+        setStatus("success")
+        options?.onSuccess?.(uploadUrl)
+        return uploadUrl
       } catch (error) {
         setStatus("error")
+        setError(error as Error)
         options?.onError?.(error as Error)
         if (options?.throwError) {
           throw error
         }
+        return null
       } finally {
         setStatus("settled")
         options?.onSettled?.()
       }
     },
-    [mutation]
+    [generateUploadUrl]
   )
 
   return {

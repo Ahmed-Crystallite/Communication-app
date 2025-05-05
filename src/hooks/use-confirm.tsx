@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useCallback } from "react"
 import { Button } from "@/components/ui/Button"
 import {
   Dialog,
@@ -12,29 +12,36 @@ import {
 export const useConfirm = (
   title: string,
   message: string
-): [() => React.ReactElement, () => Promise<unknown>] => {
-  const [promise, setPromise] = useState<{
+): [() => React.ReactElement, (message: string) => Promise<boolean>] => {
+  const [confirmState, setConfirmState] = useState<{
+    message: string
     resolve: (value: boolean) => void
   } | null>(null)
 
-  const confirm = () =>
-    new Promise((resolve, reject) => {
-      setPromise({ resolve })
-    })
+  const confirm = useCallback(
+    (message: string) =>
+      new Promise<boolean>((resolve) => {
+        setConfirmState({
+          message,
+          resolve,
+        })
+      }),
+    []
+  )
   const handleClose = () => {
-    setPromise(null)
+    setConfirmState(null)
   }
   const handleCancel = () => {
-    promise?.resolve(false)
+    confirmState?.resolve(false)
     handleClose()
   }
   const handleConfirm = () => {
-    promise?.resolve(true)
+    confirmState?.resolve(true)
     handleClose()
   }
   const ConfrimDialog = () => (
     <Dialog
-      open={promise !== null}
+      open={confirmState !== null}
       onOpenChange={(open) => !open && handleClose()}
     >
       <DialogContent>

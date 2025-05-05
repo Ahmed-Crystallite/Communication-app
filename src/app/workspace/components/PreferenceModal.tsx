@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -14,29 +13,29 @@ import { useUpdateWorkspace } from "@/features/workspaces/api/use-update-workspa
 import { useRemoveWorkspace } from "@/features/workspaces/api/use-remove-workspace"
 import { Input } from "@/components/ui/Input"
 import { Button } from "@/components/ui/Button"
-import { useWorkspaceId } from "@/hooks/use-workspace-id"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useConfirm } from "@/hooks/use-confirm"
+import { Id } from "../../../../convex/_generated/dataModel"
 
 interface PreferenceModalProps {
   open: boolean
   setOpen: (open: boolean) => void
   initialValue: string
+  workspaceId: Id<"workspaces">
 }
 
 const PreferenceModal = ({
   open,
   setOpen,
   initialValue,
+  workspaceId,
 }: PreferenceModalProps) => {
-  const workspaceId = useWorkspaceId()
-
   const router = useRouter()
 
   const [ConfrimDialog, confirm] = useConfirm(
-    "Are You Sure",
-    "This Action Is Irreversible"
+    "Delete Workspace",
+    "This action cannot be undone. This will permanently delete your workspace and remove all associated data."
   )
 
   const [value, setValue] = useState(initialValue)
@@ -48,7 +47,7 @@ const PreferenceModal = ({
     useRemoveWorkspace()
 
   const handleRemove = async () => {
-    const ok = await confirm()
+    const ok = await confirm("Are you sure you want to remove this workspace?")
 
     if (!ok) return
 

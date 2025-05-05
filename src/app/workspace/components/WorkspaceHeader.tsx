@@ -38,6 +38,7 @@ const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) => {
         open={preferencesOpen}
         setOpen={setPreferencesOpen}
         initialValue={workspace.name}
+        workspaceId={workspace._id}
       />
       <div className="flex items-center justify-between h-[48px] px-4 gap-0.5">
         <DropdownMenu>

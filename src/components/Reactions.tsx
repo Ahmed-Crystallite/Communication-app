@@ -4,9 +4,8 @@ import { useCurrentMember } from "@/features/members/api/use-current-member"
 import { cn } from "@/lib/utils"
 import Hints from "./Hints"
 import EmojiPopover from "./EmojiPopover"
-import { Button } from "./ui/Button"
-import { Plus } from "lucide-react"
 import { MdOutlineAddReaction } from "react-icons/md"
+
 interface ReactionsProps {
   data: Array<
     Omit<Doc<"reactions">, "memberId"> & {
