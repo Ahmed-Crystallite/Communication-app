@@ -28,7 +28,7 @@ const WorkspaceSwitcher = () => {
     (workspace) => workspace?._id !== workspaceId
   )
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
         <span className="inline-flex items-center justify-center rounded-md size-9 relative overflow-hidden bg-[#ababab] hover:bg-[#ababab80] text-slate-800 font-semibold text-xl">
           {workspaceLoading ? (

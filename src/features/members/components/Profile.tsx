@@ -169,7 +169,7 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
           <p className="text-xl font-bold leading-tight">{member.user.name}</p>
           {currentMember?.role === "admin" && currentMember._id !== memberId ? (
             <div className="flex items-center gap-2 mt-4">
-              <DropdownMenu>
+              <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
               <Button variant="outline" className="w-full capitalize">
                 {member.role} <ChevronDownIcon className="size-4 ml-2" />
