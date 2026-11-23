@@ -9,7 +9,8 @@ export const updateStatus = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await auth.getUserId(ctx)
-    if (!userId) throw new Error("Unauthorized")
+    // Signed out: nothing to update (the client may still fire this during logout)
+    if (!userId) return
 
     const member = await ctx.db
       .query("members")

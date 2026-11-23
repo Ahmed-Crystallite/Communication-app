@@ -192,7 +192,8 @@ export const get = query({
     const userId = await (auth.getUserId(ctx) as Promise<Id<"users"> | null>)
 
     if (!userId) {
-      throw new Error("Unauthorized")
+      // Logged out (e.g. right after sign-out): return an empty page instead of throwing
+      return { page: [], isDone: true, continueCursor: "" }
     }
     let _conversationid = args.conversationId
     if (!args.conversationId && !args.channelId && args.parentMessageId) {

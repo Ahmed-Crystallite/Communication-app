@@ -14,5 +14,11 @@ const CustomPassword = Password<DataModel>({
 })
 
 export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
-  providers: [CustomPassword, GitHub, Google],
+  providers: [
+    CustomPassword,
+    // GitHub now sends an `iss` param in the OAuth callback (RFC 9207);
+    // @auth/core 0.37 rejects it unless the issuer is declared.
+    GitHub({ issuer: "https://github.com/login/oauth" }),
+    Google,
+  ],
 })

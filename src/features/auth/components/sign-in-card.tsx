@@ -15,7 +15,6 @@ import { Input } from "@/components/ui/Input"
 import { Separator } from "@/components/ui/Separator"
 import { SignInFlow } from "../types"
 import { TriangleAlert } from "lucide-react"
-import Link from "next/link"
 
 interface SignInCardProps {
   setState: (state: SignInFlow) => void
@@ -94,6 +93,7 @@ export default function SignInCard({ setState }: SignInCardProps) {
           <Separator />
           <div className="flex flex-col gap-y-3.5">
             <Button
+              type="button"
               disabled={pending}
               onClick={() => onProviderSignIn("google")}
               variant="outline"
@@ -104,6 +104,7 @@ export default function SignInCard({ setState }: SignInCardProps) {
               Continue With Google
             </Button>
             <Button
+              type="button"
               disabled={pending}
               onClick={() => onProviderSignIn("github")}
               variant="outline"
@@ -116,9 +117,13 @@ export default function SignInCard({ setState }: SignInCardProps) {
           </div>
           <p className="text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link href="/sign-up" className="text-primary hover:underline">
+            <button
+              type="button"
+              onClick={() => setState("signUp")}
+              className="text-primary hover:underline"
+            >
               Sign up
-            </Link>
+            </button>
           </p>
         </form>
       </CardContent>

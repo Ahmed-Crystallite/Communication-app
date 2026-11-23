@@ -167,7 +167,7 @@ export const getById = query({
     const userId = await auth.getUserId(ctx)
 
     if (!userId) {
-      throw new Error("Unauthorized")
+      return null
     }
 
     const member = await ctx.db

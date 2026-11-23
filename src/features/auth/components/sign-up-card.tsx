@@ -116,6 +116,7 @@ export default function SignUpCard({ setState }: SignUpCardProps) {
           <Separator />
           <div className="flex flex-col gap-y-3.5">
             <Button
+              type="button"
               disabled={pending}
               onClick={() => onProviderSignUp("google")}
               variant="outline"
@@ -126,6 +127,7 @@ export default function SignUpCard({ setState }: SignUpCardProps) {
               Continue With Google
             </Button>
             <Button
+              type="button"
               disabled={pending}
               onClick={() => onProviderSignUp("github")}
               variant="outline"
